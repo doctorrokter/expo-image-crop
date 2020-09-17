@@ -32,7 +32,7 @@ class ExpoImageManipulator extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            cropMode: false,
+            cropMode: props.cropMode || false,
             processing: false,
             zoomScale: 1,
         }
@@ -399,16 +399,17 @@ class ExpoImageManipulator extends Component {
                                                     >
                                                         <MaterialIcon size={20} name="flip" color="white" />
                                                     </TouchableOpacity>
-                                                    <TouchableOpacity onPress={() => { onPictureChoosed({ uri, base64 }); this.onToggleModal() }}
-                                                        style={{
-                                                            marginLeft: 10, width: 60, height: 32, alignItems: 'center', justifyContent: 'center',
-                                                        }}
-                                                    >
-                                                        <Text style={{ fontWeight: '500', color: 'white', fontSize: 18 }}>{btnTexts.done}</Text>
-                                                    </TouchableOpacity>
                                                 </View>
                                             )
                                         }
+
+                                        <TouchableOpacity onPress={() => { onPictureChoosed({ uri, base64 }); this.onToggleModal() }}
+                                                          style={{
+                                                              marginLeft: 10, width: 60, height: 32, alignItems: 'center', justifyContent: 'center',
+                                                          }}
+                                        >
+                                            <Text style={{ fontWeight: '500', color: 'white', fontSize: 18 }}>{btnTexts.done}</Text>
+                                        </TouchableOpacity>
                                     </View>
                                 </View>
                             )
@@ -503,15 +504,17 @@ ExpoImageManipulator.defaultProps = {
         base64: false,
     },
     fixedMask: null,
+    cropMode: false,
 }
 
 ExpoImageManipulator.propTypes = {
     borderColor: PropTypes.string,
     isVisible: PropTypes.bool.isRequired,
     onPictureChoosed: PropTypes.func,
-    btnTexts: PropTypes.object,
-    fixedMask: PropTypes.object,
-    saveOptions: PropTypes.object,
-    photo: PropTypes.object.isRequired,
+    btnTexts: PropTypes.any,
+    fixedMask: PropTypes.any,
+    saveOptions: PropTypes.any,
+    photo: PropTypes.any.isRequired,
     onToggleModal: PropTypes.func.isRequired,
+    cropMode: PropTypes.bool,
 }
