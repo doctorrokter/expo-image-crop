@@ -32,7 +32,7 @@ class ExpoImageManipulator extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            cropMode: props.cropMode || false,
+            cropMode: false,
             processing: false,
             zoomScale: 1,
         }
@@ -61,8 +61,16 @@ class ExpoImageManipulator extends Component {
     }
 
     async componentDidMount() {
-        await this.onConvertImageToEditableSize()
+        await this.onConvertImageToEditableSize();
+
+        if (this.props.manipulatorRef) {
+            this.props.manipulatorRef(this);
+        }
     }
+
+    toggleCropMode = () => {
+        this.setState({cropMode: true});
+    };
 
     onGetCorrectSizes = (w, h) => {
         const sizes = {
@@ -503,7 +511,7 @@ ExpoImageManipulator.defaultProps = {
         base64: false,
     },
     fixedMask: null,
-    cropMode: false,
+    manipulatorRef: null,
 }
 
 ExpoImageManipulator.propTypes = {
@@ -515,5 +523,5 @@ ExpoImageManipulator.propTypes = {
     saveOptions: PropTypes.any,
     photo: PropTypes.any.isRequired,
     onToggleModal: PropTypes.func.isRequired,
-    cropMode: PropTypes.bool,
+    manipulatorRef: PropTypes.func,
 }
